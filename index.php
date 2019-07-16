@@ -1,6 +1,7 @@
 <?php
 require "config.php";
 ?>
+
 <?php 
 $error;
 if((isset($_POST['submit']))){
@@ -73,12 +74,11 @@ if((isset($_POST['submit']))){
         }
         else
         {
-            $error[]='Your Password does not matched';
+            
             echo "Password doesn't match."; 
         }
         
 } 
-
 ?>
 <?php
        if(isset($_GET['del'])){
@@ -119,7 +119,7 @@ if((isset($_POST['submit']))){
                                     <div class="form-group">
                                         <label for="lastname">Lastname</label>
                                         <input name="lastname" id="lastname" type="text" class="form-control" placeholder="lastname" required>
-                                    </div>
+                                    </div> 
                                     <div class="form-group">
                                         <label for="email">E-mail</label>
                                         <input name="email" id="email" type="text" class="form-control" placeholder="email" required>
@@ -137,8 +137,9 @@ if((isset($_POST['submit']))){
                                         <input name="phonenumber" id="phonenumber" type="tel" class="form-control" placeholder="phonenumber" required>
                                     </div>
                                     <div class="form-group">
-                                        <button name="submit"  id="submit" class="btn btn-primary btn-block">Create</button>
+                                        <button name="submit"  id="submit" class="btn btn-success btn-block">Create</button>
                                     </div>
+                                   
                                 </form>
                             </div>
                         </td>
@@ -146,7 +147,7 @@ if((isset($_POST['submit']))){
                                 </table>
                             </div>
                         </td>
-                            <td>
+                             <td>
                                 <h3 align='center'>Employees Data</h3>
                                 <hr>
                             
@@ -162,7 +163,8 @@ if((isset($_POST['submit']))){
                                         <th>PhoneNumber</th>
 
                                     </tr>
-                                    </thead>
+                                    </td>
+                                    </thead> 
                                     
                                     <tbody>
                                     <?php
@@ -182,7 +184,7 @@ if((isset($_POST['submit']))){
                                                     class="btn btn-sm btn-danger">Delete</a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-warning"
+                                                    <a class="btn btn-sm btn-info"
                                                     href="update.php?upd=<?php echo $employees['id'] ?>"
                                                     >Updata</a>
                                                 </td>
