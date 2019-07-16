@@ -3,7 +3,7 @@
 if(isset($_GET['upd'])){
     $id = $_GET['upd'];
     $q= "SELECT * FROM tb_employees WHERE id=$id";
-    $check = mysqli_query($conn,$q) or die("Cannot fetch the data.".myaqli_error($conn));
+    $check = mysqli_query($conn,$q) or die("Cannot fetch the data.".mysqli_error($conn));
     $employees = mysqli_fetch_assoc($check);
 }
 ?>
@@ -37,7 +37,7 @@ if(isset($_GET['upd'])){
     <div class="col-lg-4 col-lg-offset-4">
     <h3 align='center'>Update Data</h3>
     <hr>
-    <form name="signup" id="signup" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+    <form name="update" id="update" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
     <div align='left' class="form-group">
     <label  for="firstname" >Firstname</label>
     <input  value="<?php echo $employees['firstname']?>" name="firstname" id="firstname" type="text" class="form-control" placeholder="firstname">
@@ -55,15 +55,15 @@ if(isset($_GET['upd'])){
     <input value="<?php echo $employees['password']?>" name="password" id="password" type="password" class="form-control" placeholder="password">
     </div>
     <div align='left' class="form-group">
-    <label for="confirmpassword">ConfirmPassword</label>
-    <input value="<?php echo $employees['password']?>" name="password" id="confirmpassword" type="password" class="form-control" placeholder="confirmpassword">
+    <label for="password">Confirm Password</label>
+    <input value="<?php echo $employees['password']?>" name="password" id="password" type="password" class="form-control" placeholder="password">
     </div>
     <div align='left' class="form-group">
-    <label for="phonenumber">PhoneNumber</label>
+    <label  for="phonenumber">PhoneNumber</label>
     <input value="<?php echo $employees['phonenumber']?>" name="phonenumber" id="phonenumber" type="tel" class="form-control" placeholder="phonenumber" required>
     </div>
 <div class="form-group">
-     <button name="update" id="update" class="btn btn-primary btn-block">Update</button>
+     <button name="update" id="update" class="btn btn-sm btn-info"">Update</button>
      </div>
      </form>
      </div>
