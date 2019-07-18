@@ -1,7 +1,13 @@
 <?php
-require "config.php";
+require "config.php"; ?>
+<?php
+session_start();
+if(!isset($_SESSION["sess_user"])){
+ header("Location: login.php");
+}
+else
+{}
 ?>
-
 <?php 
 $error;
 if((isset($_POST['submit']))){
@@ -96,10 +102,13 @@ if((isset($_POST['submit']))){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-
     <title>CRUD</title>
 </head>
 <body>
+    <p>
+   <?php $_SESSION['sess_user'];?>
+   <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a> 
+    </p>
 	<div class="container" align='center'>
 		<div class="row" class="col-sm-4">
 			<div class="col-lg-12 flex-container">
@@ -194,8 +203,6 @@ if((isset($_POST['submit']))){
                                         }
                                     }
                                     ?>
-                                    
-                            
                         </tr>
                     </table>
 					
