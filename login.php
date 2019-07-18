@@ -1,28 +1,38 @@
 <?php require "config.php"; ?> 
-?>
 <?php
-$error = '';
-if((isset($_POST['login'])))
-{
-    $firstname = $_POST['firstname'];
-    $password = $_POST['password'];
-    
-    $q = "SELECT * FROM tb_employees WHERE firstname = '$firstname' AND password = '$password'";
-    //$check = mysqli_query($conn,$q) or die("Cannot fetch data from database ".mysqli_error($conn));
-    $result = $conn->query($q);
-    if ($result->num_rows > 0)
-    {
-        $row = $result->fetch_assoc();
-        //echo 'logged in';
-    }
-    else
-    {
-        echo "valid username and Password is required.";
-    }
-    
-    $conn->close();
+if(isset($_POST["login"])){
+ if(!empty($_POST['firstname']) && !empty($_POST['password'])){
+ $firstname = $_POST['firstname'];
+ $password = $_POST['password'];
+ $query = mysqli_query($conn, "SELECT * FROM tb_employees WHERE firstname='".$firstname."' AND password='".$password."'");
+ $numrows = mysqli_num_rows($query);
+ if($numrows !=0)
+ {
+ while($row = mysqli_fetch_assoc($query)){
+ 
+ $dbfirstname=$row['firstname'];
+ $dbpassword=$row['password'];
+ }
+ if($firstname == $dbfirstname && $password == $dbpassword)
+ {
+ session_start();
+ $_SESSION['sess_user']=$firstname;
+ //Redirect Browser
+ header("Location:index.php");
+ }
+ }
+ else
+ {
+ echo "Invalid Username or Password!";
+ }
+ }
+ else
+ {
+ echo "Required All fields!";
+ }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
