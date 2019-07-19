@@ -12,11 +12,12 @@ if(isset($_GET['upd'])){
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']); //confirmpassword is not added.
         $phonenumber = $_POST['phonenumber'];
         $q = "UPDATE tb_employees SET firstname = '$firstname' , lastname = '$lastname', email = '$email' , password ='$password',phonenumber = '$phonenumber' WHERE id=$id";
         $check = mysqli_query($conn,$q) or die("Cannot update the data. ".mysqli_error($conn));
-        if($check) header("Location:index.php");
+        if($check) header("Location:index.php"); 
+        
     }
 ?>
 <!DOCTYPE html>
@@ -40,23 +41,19 @@ if(isset($_GET['upd'])){
     <form name="update" id="update" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
     <div align='left' class="form-group">
     <label  for="firstname" >Firstname</label>
-    <input  value="<?php echo $employees['firstname']?>" name="firstname" id="firstname" type="text" class="form-control" placeholder="firstname">
+    <input  value="<?php echo $employees['firstname']?>" name="firstname" id="firstname" type="text" class="form-control" placeholder="firstname" required>
     </div>
     <div align='left' class="form-group">
     <label for="lastname">Lastname</label>
-    <input value="<?php echo $employees['lastname']?>" name="lastname" id="lastname" type="text" class="form-control" placeholder="lastname">
+    <input value="<?php echo $employees['lastname']?>" name="lastname" id="lastname" type="text" class="form-control" placeholder="lastname" required>
     </div>
     <div align='left' class="form-group">
     <label for="email">E-mail</label>
-    <input value="<?php echo $employees['email']?>" name="email" id="email" type="text" class="form-control" placeholder="email">
+    <input value="<?php echo $employees['email']?>" name="email" id="email" type="text" class="form-control" placeholder="email" required>
     </div>
     <div align='left' class="form-group">
     <label for="password">Password</label>
-    <input value="<?php echo $employees['password']?>" name="password" id="password" type="password" class="form-control" placeholder="password">
-    </div>
-    <div align='left' class="form-group">
-    <label for="password">Confirm Password</label>
-    <input value="<?php echo $employees['password']?>" name="password" id="password" type="password" class="form-control" placeholder="password">
+    <input value="<?php echo $employees['password']?>" name="password" id="password" type="password" class="form-control" placeholder="password" required>
     </div>
     <div align='left' class="form-group">
     <label  for="phonenumber">PhoneNumber</label>
