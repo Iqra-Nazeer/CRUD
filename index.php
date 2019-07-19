@@ -9,42 +9,32 @@ else
 {}
 ?>
 <?php 
-$error;
 if((isset($_POST['submit']))){
     
     $firstname = strip_tags($_POST['firstname']);
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
-    $password = ($_POST['password']);
-    $confirmpassword = ($_POST['confirmpassword']);
+    $password = md5($_POST['password']);//md5 encrypt password and saved in database.
+    $confirmpassword = md5($_POST['confirmpassword']);
     $phonenumber = $_POST['phonenumber'];
     if(preg_match('/[^a-zA-Z]/', $firstname)){
         echo "Only alphabets are allowed as firstname";
     }
     else {
-        echo "Firstname looks good!";
     }
-    echo "<br>";
     if(preg_match('/[^a-zA-Z]/', $lastname)){
         echo "Only alphabets are allowed as lastname";
     }else {
-        echo "Lastname looks good!";
     }
-    echo "<br>";
     if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-        echo "Email looks Good";
     }else {
         echo "Invalid email address";
     }
-    echo "<br>";
     if(strlen($firstname)>2 && strlen($firstname) < 15){
-        echo "Firstname range is ok";
     }else{
         echo "Firstname must be between 2 to 15 chars long.";
     }
-    echo "<br>";
     if(strlen($lastname)>2 && strlen($lastname) < 15){
-        echo "Lastname range is ok";
     }else{
         echo "Lastname must be between 2 to 15 chars long.";
     }
@@ -71,10 +61,10 @@ if((isset($_POST['submit']))){
             if(empty(trim($phonenumber))){
                echo "Phonenumber is required.";
     }
-    if(isset($_POST['password']) && $_POST['password']==$_POST['confirmpassword']){
-        $confirmpassword=$_POST['confirmpassword'];
-            $q="INSERT INTO tb_employees( `firstname` , `lastname` , `email` , `password` , `confirmpassword` , `phonenumber`) 
-            VALUES('$firstname','$lastname','$email','$password','$confirmpassword','$phonenumber')";
+    if(isset($_POST['password']) && $_POST['password']==$_POST['confirmpassword']){ //confirmpassword is not saved in database. 
+        $confirmpassword=$_POST['confirmpassword']; //only password is saved in database not confirmpassword.
+            $q="INSERT INTO tb_employees( `firstname` , `lastname` , `email` , `password`, `phonenumber`) 
+            VALUES('$firstname','$lastname','$email','$password','$phonenumber')";
             $check = mysqli_query($conn,$q) or die("Cannot insert data into database" .mysqli_error($conn));
             if($check) echo "Data submitted successfully."; 
         }
@@ -107,7 +97,9 @@ if((isset($_POST['submit']))){
 <body>
     <p>
    <?php $_SESSION['sess_user'];?>
-   <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a> 
+   <div class="container" align='right'>
+   <a href="logout.php" class="btn btn-danger">Sign Out</a> 
+    </div>
     </p>
 	<div class="container" align='center'>
 		<div class="row" class="col-sm-4">
@@ -167,8 +159,7 @@ if((isset($_POST['submit']))){
                                         <th>ID</th>
                                         <th>Firstname</th>
                                         <th>Lastname</th>
-                                        <th>Email</th>
-                                        <th>Password</th>  
+                                        <th>Email</th>  
                                         <th>PhoneNumber</th>
 
                                     </tr>
@@ -185,8 +176,7 @@ if((isset($_POST['submit']))){
                                             <td> <?php echo $employees['id']?> </td>
                                                 <td> <?php echo $employees['firstname']?> </td>
                                                 <td> <?php echo $employees['lastname']?> </td>
-                                                <td> <?php echo $employees['email']?> </td>
-                                                <td> <?php echo $employees['password']?> </td> 
+                                                <td> <?php echo $employees['email']?> </td> 
                                                 <td> <?php echo $employees['phonenumber']?> </td>
                                                 <td>
                                                     <a href="<?php $_SERVER['PHP_SELF'] ?>?del=<?php echo $employees['id']?>"
